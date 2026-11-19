@@ -7,6 +7,8 @@ note: written and saved BEFORE any run was launched, so the marking cannot be fi
 
 # Marking rules for the paper 1 re-tests (fixed before any run)
 
+Published copy: a few private references are reworded (folder names, a private record id and the owner's internal decision labels). No marking rule was changed; the original is kept in the author's private records.
+
 Why: the paper's open-ended trials (research R, audit A, second opinion S) were one run per arm,
 and R shared one search allowance that Opus used up and Fable did not. These re-runs give each
 run its own allowance, repeat each arm, and check the claims without the checker knowing which
@@ -23,7 +25,7 @@ model wrote them.
   each message's model field); a run on a different model is reported, not counted.
 - At most 2 calls at once, below-normal priority. Runs are queued so the two models alternate and
   run side by side.
-- Cost is the figure the call reports (list price). On Joe's plan it is allowance, not money.
+- Cost is the figure the call reports (list price). On the author's plan it is allowance, not money.
 - Every call is recorded as a full event log (stream-json), so tool calls can be listed afterwards.
 
 ## R: research (10 runs: packaging brief Fable x3, Opus x3; fresh brief on accounting software x2 each)
@@ -64,12 +66,12 @@ model wrote them.
 
 ## A: audit (4 runs: Fable x2, Opus x2)
 
-- Same brief (rebuilt from the original, read-only, answer returned as text), same vault state (all
-  four launched back to back today), tools Read, Glob, Grep only. Blocked by rule: `Clients/`,
-  `Life/`, `Emails/`, `Inbox/`, plus the earlier audit's own report folder and files that describe it,
+- Same brief (rebuilt from the original, read-only, answer returned as text), same state of the business's notes (all
+  four launched back to back today), tools Read, Glob, Grep only. Blocked by rule: the client,
+  personal, email and inbox folders, plus the earlier audit's own report folder and files that describe it,
   so no run can read the earlier answer.
 - **Client check:** the full call log of every run is searched for any tool call whose path
-  contains `Clients`; any such attempt (allowed or denied) is reported. A read that succeeded would
+  points at the client folder; any such attempt (allowed or denied) is reported. A read that succeeded would
   void that run.
 - **Top ten.** The first ten numbered findings of each report. Labels hidden as in R4 (random
   letters, key saved separately, model self-references removed).
@@ -87,17 +89,17 @@ model wrote them.
 ## S: second opinion (6 runs: Fable x3, Opus x3)
 
 - Same brief (rebuilt, the original was not saved), same draft (the Opus 5.5 suggestion as logged),
-  same frozen copy of the site and notes as they stood before the title was changed (commit
-  `347a2e084^`), tools Read, Glob, Grep only.
+  same frozen copy of the site and notes as they stood before the title was changed (a saved
+  copy from version control), tools Read, Glob, Grep only.
 - **Claims.** Each distinct problem or factual claim in the review's points 2 and 4 is one claim.
 - **Check (blind).** Sonnet 5.5 checks each against the frozen files: **true**, **partly true**,
   **false**, or **not checkable from the files**. Character counts are checked by counting.
 - **Known-issues checklist, fixed now.** The earlier Fable review caught these; a run scores each
-  one it states clearly: C1 "small businesses" reverses the owner's 2026-10-19 decision (no size on
-  the site); C2 the title is too long and would be cut in results (about 60 characters); C3 the
+  one it states clearly: C1 "small businesses" reverses the owner's earlier decision not to name a business
+  size on the site; C2 the title is too long and would be cut in results (about 60 characters); C3 the
   " | " separator breaks the site's " - Native Reason" title pattern; C4 the draft's "for small
-  businesses in West London" claims customers are in West London when the site only says Joe is;
-  C5 the owner's 2026-10-20 decision 13 (site is for people he has met, no promotion) is in tension
+  businesses in West London" claims customers are in West London when the site only says the owner is;
+  C5 the owner's earlier decision about who the site is for is in tension
   with search work. Scored yes/no per run by the blind checker, from the review text alone.
 - Reported per model: claims checked, share true, false claims, checklist items caught (out of 5),
   time, cost, tokens.
@@ -109,4 +111,4 @@ No runs. A blind ranking sheet for people, with the key kept apart. Not sent to 
 ## What the summary must do with the result
 
 For each trial, say plainly whether the paper's claim stands, weakens or flips, and give the limits
-(n, rebuilt briefs, same-day changes in the vault, checker is one model).
+(n, rebuilt briefs, same-day changes in the notes, checker is one model).

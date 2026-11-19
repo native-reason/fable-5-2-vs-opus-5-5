@@ -23,7 +23,7 @@ In short: on jobs with a right answer a computer can check, the two were level a
 | `data/totals.csv` | Total cost and time ratios with a 95% range from resampling the jobs |
 | `data/pause_windows.csv` | When the machine's freeze watchdog paused batch jobs; runs overlapping a pause are left out of the timing |
 | `data/retests.csv` | One row per open-ended re-test run: time, cost, tokens, tool use and the blind verdict counts |
-| `data/marking-rules.md` | The marking rules for the re-tests, as saved before any run started |
+| `data/marking-rules.md` | The marking rules for the re-tests, as saved before any run started, with a few private references reworded (no rule changed) |
 | `scripts/` | `extract.py` and `extract_retests.py` (raw files to CSV), `figures.py`, `build.py` |
 
 ## What is not here
@@ -61,7 +61,7 @@ Corrections will be made as new versions, with earlier versions kept in the hist
 
 | Version | Date | Change |
 |---|---|---|
-| 1 | 18 November 2026 | First draft, not released. Two independent reviews said its open-ended results rested on single runs |
+| 1 | 18 November 2026 | First draft, not released. Two reviews, one by each model under test, said its open-ended results rested on single runs |
 | 2 | 19 November 2026 | The full matched bench pass and blind re-tests of the research, audit and second-opinion jobs. The first draft's research advantage for Fable did not repeat |
 
 ## Citation
