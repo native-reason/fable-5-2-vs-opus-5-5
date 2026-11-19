@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+# macOS and Windows
+.DS_Store
+Thumbs.db
+# Logs and scratch
+*.log
+*.tmp
+# Editors
+.vscode/
+.idea/
+*.swp

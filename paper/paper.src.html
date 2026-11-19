@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>When is the more expensive model worth paying for?</title>
+<meta name="author" content="Joseph Riggs">
+<style>
+  @page {
+    size: A4;
+    margin: 22mm 22mm 24mm 22mm;
+    @bottom-center { content: counter(page); font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; font-size: 9pt; color: #666; }
+  }
+  :root { --ink: #1d1d1b; --muted: #5f5f5b; --rule: #1d1d1b; --hair: #b9b9b4; --link: #275b59; }
+  html { background: #ffffff; }
+  body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, "TeX Gyre Pagella", serif;
+    font-size: 10.5pt; line-height: 1.42; color: var(--ink); background: #ffffff;
+    max-width: 166mm; margin: 0 auto; padding: 0;
+    hyphens: auto; -webkit-hyphens: auto; text-align: justify;
+    font-variant-numeric: lining-nums;
+  }
+  a { color: var(--link); text-decoration: none; }
+  .status { font-size: 8.5pt; color: var(--muted); display: flex; justify-content: space-between; border-bottom: 0.4pt solid var(--hair); padding-bottom: 3pt; margin-bottom: 18pt; text-align: left; }
+  h1.title { font-size: 17pt; line-height: 1.22; font-weight: bold; text-align: center; margin: 0 6mm 10pt; hyphens: none; }
+  .authors { text-align: center; font-size: 11pt; margin-bottom: 2pt; }
+  .affil { text-align: center; font-size: 9pt; color: var(--muted); margin-bottom: 1pt; }
+  .abstract { margin: 16pt 9mm 6pt; font-size: 9.8pt; }
+  .abstract h2 { font-size: 10pt; text-align: center; margin: 0 0 4pt; font-weight: bold; }
+  .keywords { margin: 0 9mm 16pt; font-size: 9.2pt; }
+  h2 { font-size: 12pt; margin: 16pt 0 5pt; font-weight: bold; break-after: avoid; text-align: left; }
+  h3 { font-size: 10.5pt; margin: 11pt 0 3pt; font-weight: bold; break-after: avoid; text-align: left; }
+  p { margin: 0 0 6pt; orphans: 3; widows: 3; }
+  p + p { text-indent: 0; }
+  .run-in { font-weight: bold; }
+  figure { margin: 12pt 0 12pt; break-inside: avoid; }
+  figure img { width: 100%; display: block; }
+  figcaption, .caption { font-size: 9pt; line-height: 1.35; text-align: left; }
+  figcaption { margin-top: 6pt; }
+  .tablewrap { margin: 12pt 0 12pt; break-inside: avoid; }
+  .tablewrap.can-break { break-inside: auto; }
+  .can-break .caption { break-after: avoid; }
+  thead { display: table-header-group; }
+  tbody tr { break-inside: avoid; }
+  table.b1 { font-size: 8.2pt; }
+  table.b1 td:nth-child(1), table.b1 td:nth-child(2) { white-space: nowrap; }
+  .caption { margin-bottom: 4pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.8pt; line-height: 1.3; text-align: left; hyphens: none; }
+  thead tr:first-child th { border-top: 1pt solid var(--rule); }
+  thead th { border-bottom: 0.5pt solid var(--rule); font-weight: bold; padding: 3pt 5pt; vertical-align: bottom; }
+  tbody td { padding: 2.2pt 5pt; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 1pt solid var(--rule); }
+  tr.total td { border-top: 0.5pt solid var(--rule); font-weight: bold; }
+  td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
+  .wide td:first-child { white-space: nowrap; }
+  .note { font-size: 8.3pt; color: var(--muted); margin-top: 3pt; text-align: left; }
+  .refs { font-size: 9pt; text-align: left; }
+  .refs ol { padding-left: 18pt; margin: 0; }
+  .refs li { margin-bottom: 3pt; }
+  .endmatter h2 { font-size: 10.5pt; margin-top: 12pt; }
+  .endmatter p { font-size: 9.6pt; }
+  .page-break { break-before: page; }
+  table.b3 { font-size: 7.8pt; }
+  .rng { color: var(--muted); font-size: 7pt; }
+  .box { border: 0.8pt solid var(--rule); padding: 6pt 9pt 3pt; margin: 10pt 0 12pt; break-inside: avoid; font-size: 9.3pt; text-align: left; }
+  .box .boxhead { font-weight: bold; margin-bottom: 4pt; }
+  .box p { margin: 0 0 4pt; }
+  .box pre, pre.out { font-family: Consolas, "Courier New", monospace; font-size: 7.8pt; line-height: 1.3; white-space: pre-wrap; margin: 2pt 0 5pt; text-align: left; }
+  ol.limits { margin: 0 0 6pt; padding-left: 18pt; }
+  ol.limits li { margin-bottom: 3pt; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 8.8pt; }
+</style>
+</head>
+<body>
+
+<div class="status"><span>{{STATUS_LINE}}</span><span>Native Reason research note 1</span></div>
+
+<h1 class="title">When is the more expensive model worth paying for? Claude Fable 5.2 and Claude Opus 5.5 on a small business's own work</h1>
+<div class="authors">Joseph Riggs</div>
+<div class="affil">Native Reason Ltd, Ealing, London, United Kingdom</div>
+<div class="affil">Correspondence: <a href="mailto:hello@nativereason.com">hello@nativereason.com</a></div>
+
+<div class="abstract">
+<h2>Abstract</h2>
+<p>Small businesses choosing an AI model are told which one is strongest on general benchmarks. They are rarely told whether the most expensive model is worth its price on the work they actually do. I compared Claude Fable 5.2, Anthropic's most capable widely released model, with Claude Opus 5.5, which costs half as much per token, on the work of my own one-person AI consultancy between 10 and 16 November 2026. No client documents or client personal data were used: the code-marked jobs run on made-up data, and the open-ended work on the business's own notes and code. The comparison had three parts: 24 jobs from the business marked by code and set against earlier Opus runs; eight pairings of job and effort run on the same night with both models at matched effort; and six pieces of open-ended work (a plan, an audit, a research question, a fault diagnosis, a second opinion and writing in my voice), judged by checking claims against their sources, by re-running findings, or by a blind judge. On the code-marked jobs the models were level. Both scored 1.00 on every same-night pairing, where Fable cost 2.20 times as much and took 1.20 times as long; earlier figures that made Fable look two to three times slower came from a busy machine and mismatched settings. On open-ended work Fable earned its price where one wrong fact would change the decision. In the research task, Fable alone held every checked claim for about 1.6 times the cost of Opus alone, whose recommendation rested on a feature new users cannot get. Fable lost a blind test of writing in my voice, and both models made factual mistakes that no score would have caught. I give a simple rule for which jobs to send to which model, and release the per-run data and the scripts that build every table.</p>
+</div>
+<p class="keywords"><b>Keywords:</b> large language models; model selection; cost; evaluation; small business; Claude</p>
+
+<h2>1 Introduction</h2>
+
+<p>Small businesses that ask me about AI tend to ask some version of the same question: which one should we pay for? Behind it sits a narrower question that matters more to the bill. Vendors now sell several models at very different prices, and the newest, most capable one usually costs the most. Anthropic prices Claude Fable 5.2 at USD 8 per million input tokens and USD 40 per million output tokens, twice Claude Opus 5.5 at USD 4 and USD 20 [1], although reading back from the prompt cache costs the same USD 0.20 per million on both. A business that sends everything to the top model pays about double. One that never uses it may miss the jobs where it would have prevented an expensive mistake.</p>
+
+<p>Public benchmarks answer a different question. They measure what a model can do on a fixed, shared set of tasks [2, 3], and the strongest models now sit so close to the ceiling on many of them that the differences are hard to read [4]. Kapoor and colleagues argued that cost should be reported next to accuracy whenever agents are compared [5], and routing systems such as FrugalGPT and RouteLLM rest on the observation that a cheaper model often does a given job as well as a dearer one [6, 7]. Okubena, Mohammed and Elbadawi made a related point in a very different field: standard language metrics told them how fluent a model's output was but not whether the pharmaceutical formulation it proposed would print, so they built a measure for the job itself [8]. The same applies to a business. What it needs to know is how the models do on its own work, marked in a way that reflects what a mistake would cost.</p>
+
+<p>This paper reports what happened when I ran Fable 5.2 and Opus 5.5 on the everyday work of my own business, Native Reason, a one-person AI consultancy in London. Most of the work is unglamorous: filing email, pulling promises out of a thread, writing small programs, fixing bugs, checking which files may leave the laptop, researching decisions and planning the week. I had already built a bench of these jobs to decide which model each part of the business should use: each one copies a real job, runs on made-up emails, notes and code, and is marked by code. When Fable 5.2 came out I added it to the bench, and over the following week I also gave both models the same open-ended briefs and checked what came back.</p>
+
+<p>Three findings follow. First, on jobs a computer can mark the two models were level, and Fable's extra cost was almost exactly its higher price: it used only a quarter more output tokens and, once timed fairly, it was not much slower. Second, on open-ended work where one wrong fact would change the decision, Fable was as good or better, and in one research task clearly more accurate for about 1.6 times the cost. Third, both models made factual mistakes of a kind no score would catch, so the habit of checking claims matters at least as much as the choice of model. Following OpenAI's release of its mathematics manuscripts together with their compute and verification records [9], I publish the per-run numbers and the scripts that turn them into every table and figure here.</p>
+
+<p><span class="run-in">What I expected.</span> I did not write a prediction down before the runs. Asked afterwards what I had expected, I said there would be pros and cons to both: that Fable would be the better model, but that some jobs could be done just as well by Opus, and that the best way to use them would be to send each job to the right model. That is a recollection, not a registered hypothesis. Section 4.1 says how it held up.</p>
+
+<h2>2 Methods</h2>
+
+<h3>2.1 Setting</h3>
+
+<p>All runs were made on one Windows laptop through Claude Code, Anthropic's command-line agent [10]. The Fable runs and the same-night runs used version 2.1.322 between 10 and 16 November 2026. The earlier Opus and Sonnet runs that Study 1 uses as a baseline were made on 5, 6, 15 and 21 October with versions 2.1.284 and 2.1.291 (Appendix C), so the version of Claude Code is one more thing that differs in Study 1. The other exception is the labelling job in Section 3.1, run again on 19 November with the same settings on Claude Code 2.1.328 after one of its invented requests was reworded. The business keeps its notes, rules and code in a single folder under version control, which the agents read and write. Every job reported here used the business's own material or made-up test data. Work done on client material is not included.</p>
+
+<p>In all, the bench part of the paper rests on 237 runs (<code>data/runs.csv</code>): 93 by Fable 5.2, 77 by Opus 5.5, 65 by Sonnet 5.5 and 2 by Haiku 5.5, of which 177 belong to Study 1 and 60 to Study 2. The five broken or blocked runs described in Section 2.3 are in the file with the reason but are not counted. Held fixed throughout: the laptop, how Claude Code was called (headless, with no personal settings, hooks or memory), the fence round agent jobs, the full model identifier and the marking code. Within each study what changed between runs was the model and its effort setting. Figure 1 shows how one run works, and Appendix C lists the exact versions used.</p>
+
+<figure>
+<img src="figures/fig1-method.svg" alt="Five boxes in a row joined by arrows: the job, the set-up, the model, the run, the marking. A loop arrow from the marking back to the model says the run was repeated two or three times.">
+<figcaption><b>Figure 1.</b> How one bench run works. Steps 3 and 5 are the ones that change between models and the ones the paper reports on. Nothing in step 5 is a model's opinion.</figcaption>
+</figure>
+
+<p>The runs were paid for through a Claude Max subscription. For every call, Claude Code reports a cost worked out from the tokens used and Anthropic's API prices; on a subscription this is the share of the allowance used, not money spent. I report that figure throughout as cost, because it is what a business paying by the token would pay.</p>
+
+<h3>2.2 Models and settings</h3>
+
+<p>The two models were <code>claude-fable-5-2</code> and <code>claude-opus-5-5</code>, named by their full identifiers. This turned out to matter. On an older Claude Code version the short name "fable" still pointed to Fable 5.1, and two of the first nineteen Fable jobs I logged quietly ran the older model. Neither is used here, and for every other run I checked the model recorded in the run's own transcript. Both models think before they answer. The effort setting, from low to max, controls how much: higher effort means more thinking and more tool use before the answer, which costs more tokens and takes longer. Opus 5.5 defaults to medium [1]. Unless stated otherwise Fable ran at high effort. Table 1 gives the prices, with Sonnet 5.5 for reference because the business already uses it for routine jobs.</p>
+
+<div class="tablewrap">
+<div class="caption"><b>Table 1.</b> List prices in USD per million tokens on 18 November 2026 [1]. Writing to the prompt cache costs 1.25 times the input price.</div>
+<table>
+<thead><tr><th>Model</th><th>Identifier</th><th class="n">Input</th><th class="n">Output</th><th class="n">Cache read</th></tr></thead>
+<tbody>
+<tr><td>Claude Fable 5.2</td><td><code>claude-fable-5-2</code></td><td class="n">8.00</td><td class="n">40.00</td><td class="n">0.20</td></tr>
+<tr><td>Claude Opus 5.5</td><td><code>claude-opus-5-5</code></td><td class="n">4.00</td><td class="n">20.00</td><td class="n">0.20</td></tr>
+<tr><td>Claude Sonnet 5.5</td><td><code>claude-sonnet-5-5</code></td><td class="n">2.00</td><td class="n">10.00</td><td class="n">0.10</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.3 Study 1: the bench against earlier Opus runs (10 November)</h3>
+
+<p>The bench holds 25 jobs taken from the business (Appendix A). Each is a single prompt or a small agent task in its own folder, and each is marked by code: an answer key, hidden tests, or a script that checks what the agent left behind. No model marks another model's work on the bench. Agent jobs run inside a fence: file tools are confined to the job's folder and only a short list of shell commands is allowed. Every call runs headless with no personal settings, hooks or memory loaded, so the models are compared on the job and not on my set-up. Each hidden test was checked against a correct reference solution before the first run, so a failure is the model's and not the test's. I wrote the jobs and their answer keys myself and kept them private. They were never published before these runs, so the models cannot have seen them in training. The two jobs shown in Appendix D are published with this paper, after the runs.</p>
+
+<p>Fable 5.2 ran each job two or three times at high effort on 10 November. One job, labelling requests by difficulty and data sensitivity, was left out of this comparison and is reported in Section 3.1. For comparison I used the most recent Opus 5.5 and Sonnet 5.5 runs the bench already held for each job, made between 5 and 21 October, plus Opus runs made on 10 November for four wording jobs that had none. These baselines were not run alongside Fable. They ran on other days and, for ten of the 24 jobs, Opus had run at medium rather than high effort. Study 2 removes both problems, but only for the eight pairings it happened to cover (Section 2.4).</p>
+
+<p>The first Fable run stopped after 68 of its 77 runs when the laptop's disk filled, and the nine lost runs were made again the same day. The briefing job among them first ran from a folder where Claude Code refuses to write files, so all three of those runs scored 0 for a missing file; that was my set-up, not the model, and the job was run again from an ordinary folder. Two more Fable runs were broken by the machine: the disk filled during one (digest-day, scored 0.40), and another program was holding the network port the job needed during the other (localhost, 0.29). Both jobs were run once more. The broken and blocked rows are published in <code>data/runs.csv</code> with the reason, and left out of every average. Counting the two broken runs would give Fable 0.80 on digest-day and 0.76 on localhost instead of 1.00.</p>
+
+<h3>2.4 Study 2: the same jobs on the same night (11 November)</h3>
+
+<p>Early on 11 November an automatic job that tests every new model on the bench ran Fable 5.2 next to the settings the business was using at the time. For eight pairs of job and effort, Opus 5.5 and Fable 5.2 ran the same job at the same effort, twice each, on the same machine, with all 32 of these runs starting within about eight minutes of each other and up to four running at a time. The eight pairings cover seven jobs, because one job ran at two efforts. Four pairs were at high effort and four at medium (Table 3). The same run also put Fable against Sonnet 5.5 and Haiku 5.5 on other jobs; I mention those only where they bear on the comparison.</p>
+
+<h3>2.5 Study 3: six pieces of open-ended work</h3>
+
+<p>Bench jobs have right answers. Much of the work that matters to a small business does not: a plan, an audit, a research answer, a judgement on someone else's draft. Between 10 and 16 November I gave six such jobs to Fable 5.2 (Table 2). In four of them Opus 5.5 was given the same brief, and neither model saw the other's work. In the fifth Fable reviewed a draft Opus had written, and in the sixth Fable worked alone and Opus re-checked its findings. How each job was judged depended on the job. Claims were checked against the pages they cited, both by script and by reading; findings were re-run against the live system; and two LinkedIn posts in my voice were marked blind by a separate model on a ten-point scale [11]. The research trial had a marking sheet that was written and committed to version control before any run started.</p>
+
+<div class="tablewrap can-break">
+<div class="caption"><b>Table 2.</b> The six pieces of open-ended work in Study 3.</div>
+<table class="wide">
+<thead><tr><th>ID</th><th>Date</th><th>Job</th><th>Arms</th><th>How it was judged</th></tr></thead>
+<tbody>
+<tr><td>P</td><td>10 Nov</td><td>Plan an afternoon of background work for the business's AI agents</td><td>Fable; Opus</td><td>Both plans compared side by side; I chose which to use</td></tr>
+<tr><td>W</td><td>10 Nov</td><td>Two LinkedIn posts in my voice, same two topics</td><td>Fable; Opus</td><td>Blind judge (Opus 5.5), voice and clarity out of 10</td></tr>
+<tr><td>A</td><td>10 Nov</td><td>Audit the business's own systems: scheduled jobs, rules, memory, logs</td><td>Fable only</td><td>Each of the ten top findings re-run by Opus 5.5</td></tr>
+<tr><td>S</td><td>11 Nov</td><td>Second opinion on a website search title and description drafted by Opus</td><td>Fable reviewing Opus</td><td>Every claim checked against the site's files</td></tr>
+<tr><td>R</td><td>16 Nov</td><td>Research: how to package a product so the customer keeps their data</td><td>Fable; Opus; Fable leading 7 Opus</td><td>Marking sheet set in advance; 21 to 24 claims per report checked against sources</td></tr>
+<tr><td>D</td><td>16 Nov</td><td>Find why the business's AI chats stop and hand work back, and how to fix it</td><td>Fable; Opus</td><td>Reports compared; five key claims checked in the files</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.6 What was measured</h3>
+
+<p>For bench jobs I recorded the score from 0 to 1, wall time, cost and output tokens, and averaged them over the runs of each job. For the open-ended work I recorded whether claims held against their sources, whether findings held when re-run, what I chose to use, and time and cost where the transcript allowed. To keep words like "same" honest I used fixed rules set before Study 1: scores within 0.02 of each other count as the same, and time or cost must differ by at least 15% to count as different.</p>
+
+<h3>2.7 A worked example</h3>
+
+<div class="box">
+<div class="boxhead">One job, its answer key and its score (the job "commitments")</div>
+<p><b>The job.</b> The model gets an email thread between a consultant and a made-up client and must list every promise anyone made: who owes it (<code>we_owe</code> or <code>owed_to_us</code>), who will do it, what, and the due phrase copied word for word from the email, or <code>null</code> if no timing was given. A request does not count unless the other side agreed to it. It replies with a JSON list and nothing else.</p>
+<p><b>One line of the thread.</b> "I'll have the revised quote with you by Monday 12 October."</p>
+<p><b>The answer key has seven entries.</b> The entry for that line is:</p>
+<pre>{"direction": "we_owe", "what_any": ["quote"], "due": "by Monday 12 October"}</pre>
+<p><b>What Fable 5.2 answered for it.</b></p>
+<pre>{"direction": "we_owe", "who": "Joe", "what": "Send the revised quote", "due": "by Monday 12 October"}</pre>
+<p><b>The score.</b> Each key entry earns one point if the reply has an item with the right direction and a matching key word in "what", and one more point if its due phrase matches the email's words (or is <code>null</code> when the key says there was no timing). The score is the points divided by 14, minus 0.1 for every extra item that matches no entry. Fable's reply matched all seven entries with all seven due phrases right and listed nothing extra: 14 of 14, a score of 1.00. A reply that missed the signed NDA and added one invented promise would have scored 12 of 14 minus 0.1, which is 0.76. Standard language measures would not catch this kind of mistake, which is why the job has its own marking code.</p>
+</div>
+
+<h2>3 Results</h2>
+
+<h3>3.1 Scores</h3>
+
+<p>Neither study separated the two models on score. In Study 1 Fable scored 1.00 on 23 of the 24 jobs and 0.98 on the other, where one of three runs missed a hidden test. The mean across jobs was 0.999 for Fable, 0.976 for Opus 5.5 and 0.993 for Sonnet 5.5 (Appendix B). Most of the Opus shortfall came from a single job: in its two October runs at medium effort on the recurring-tasks feature, one failed every hidden test (0.00) and the other passed them all (1.00). In Study 2, at the same medium effort on the same night, Opus passed all of them. Across the eight same-night pairs both models scored 1.00 on every run (Table 3). Where a job was repeated, the lowest and highest single runs are in <code>data/by_task.csv</code>, and Table 3 shows them for time and cost. I report ranges rather than significance tests, because two or three runs of a job are too few for a test to mean anything.</p>
+
+<p>The one job on which Fable did worse was outside the Opus comparison. Asked to label a list of requests by difficulty and by how sensitive their data was, Fable at low and medium effort scored 0.93 and 0.95 against 0.98 and 1.00 for Sonnet 5.5, because in three of its four runs it marked the same three internal requests as client work. It made the same mistake in every run when the job was first tried on 11 November. That is a cautious mistake rather than a careless one, but it is still wrong against the key.</p>
+
+<p>Figure 2 counts the jobs using the rules from Section 2.6. On score, 19 of the 24 jobs in Study 1 and all eight pairings in Study 2 came out the same. Fable was ahead on four jobs in Study 1 and Opus on one. Cost and time (Section 3.2) are a different picture: Opus was cheaper by at least 15% on 22 of 24 jobs in Study 1 and on six of eight pairings in Study 2.</p>
+
+<figure>
+<img src="figures/fig2-same-or-different.svg" alt="Six horizontal stacked bars. For score, most jobs are grey (about the same). For cost, most are orange (Opus ahead). For time, 18 of 24 are orange in Study 1 and 3 of 8 in Study 2.">
+<figcaption><b>Figure 2.</b> On score the models were level on nearly every job, but Opus was cheaper on most. Each bar counts jobs: blue where Fable was ahead, grey where the two were the same, orange where Opus was ahead (Fable dearer or slower). Study 1 has 24 jobs and Study 2 has 8 pairings of job and effort. The rules were set before Study 1: scores within 0.02 are the same, and time or cost must differ by at least 15% to count as different.</figcaption>
+</figure>
+
+<div class="tablewrap">
+<div class="caption"><b>Table 3.</b> Study 2: the eight pairings of job and effort that both models ran on the same night, two runs each. Score, wall time in seconds and cost in USD are means over the two runs. Ratio is Fable divided by Opus. The smaller grey line under each mean gives the lowest and highest of the two runs.</div>
+{{TABLE_STUDY2}}
+</div>
+
+<h3>3.2 Cost and time</h3>
+
+<p>Fable cost more on almost every job. In Study 1 it cost 2.84 times as much as Opus in total (USD 16.37 against 5.77 across the 24 jobs) and 5.35 times as much as Sonnet 5.5 (USD 3.06). Per job the ratio to Opus ran from 0.80 to 7.70 (Figure 3a). The highest ratios were all on jobs where the Opus baseline had run at medium effort: the median ratio there was 3.54, against 2.11 where both had run at high.</p>
+
+<p>Study 2 removes that problem. At matched effort on the same night Fable cost 2.20 times as much in total (USD 4.55 against 2.07), with a median of 2.02 per job and a range of 0.73 to 2.41. Fable produced 1.24 times as many output tokens as Opus in total, but one long build dominates that sum: the median per pairing was 1.07, and Fable wrote fewer output tokens on three of the eight. Because cache reads cost the same on both models, a cost ratio above 2 means Fable also used more tokens overall, not just more output. The bench did not record input and cache tokens for these runs, so the cost cannot be split further. By the 15% rule Fable was cheaper on one short job, a rewrite (ratio 0.73); on a bug fix both Fable runs cost less than both Opus runs, but by less than 15% on average (0.90).</p>
+
+<p>Time gave a different answer in the two studies (Figure 3b). In Study 1 Fable took 1.90 times as long as Opus in total, and on one short rewrite job more than nine times as long. That run shared the laptop with other work in the middle of the day, four jobs at a time. The baselines also ran four at a time and some of them stalled too, so I cannot say how much of the gap the machine caused; the lower effort of ten baselines explains at least part of it. In Study 2, with both models under the same conditions, Fable took 1.20 times as long in total and the median ratio was 1.09. My own notes after the first run said Fable was two to three times slower. With fair timing that was wrong.</p>
+
+<figure>
+<img src="figures/fig3-ratios.svg" alt="Two dot plots, one row per bench job, showing Fable 5.2 divided by Opus 5.5 for cost (left) and wall time (right) on a log scale. Open grey circles are Study 1, filled dark dots Study 2.">
+<figcaption><b>Figure 3.</b> Fable 5.2 relative to Opus 5.5 on each bench job, on a log scale. (a) Cost. The dashed line marks the price ratio of 2; a point near it means Fable used about as many tokens as Opus. (b) Wall time. Open circles: Study 1, where Opus figures come from earlier runs, some at a lower effort. Filled dots: Study 2, same night and same effort. Jobs are ordered by the Study 1 cost ratio. The jobs and their marking are listed in Appendix A.</figcaption>
+</figure>
+
+<p>Figure 4 shows every run in Study 2, so you can see the spread behind each average. On five of the eight pairings both Fable runs cost more than both Opus runs, by roughly a factor of two. On the bug fix both Fable runs were cheaper, though by less than the 15% that counts as different. On the other two, a short rewrite and the smallest job, the dots overlap: the rule counts the rewrite as cheaper on Fable from its average, but a single run of each would not have shown it. I chose cost and not score because every Study 2 run scored 1.00, so a score plot would be a single column of dots. Each job has only two runs, so I show the dots and not error bars.</p>
+
+<figure>
+<img src="figures/fig4-every-run.svg" alt="One row per Study 2 pairing. Blue dots (Fable) and orange dots (Opus) show the cost of each run on a log scale, with a black line at each mean. Fable sits to the right of Opus on five rows.">
+<figcaption><b>Figure 4.</b> Fable cost about twice as much on most jobs, but the runs overlap on the cheapest ones. Each dot is one run of one job in Study 2 (eight pairings, two runs per model on each), blue for Fable 5.2 and orange for Opus 5.5, with a black line at each mean. The grey rings are two Sonnet 5.5 runs of the same job, which was the only pairing that had them.</figcaption>
+</figure>
+
+<p>Figure 5 gives the total cost and time ratios from Section 3.2 a range. I resampled the jobs 10,000 times and recomputed each ratio of totals; the bars show the middle 95% of those results. Study 2 has only eight pairings of seven jobs, so its ranges are wide. Its cost ratio of 2.20 runs from 1.69 to 2.36, and its time ratio of 1.20 runs from 0.94 to 1.28, which includes 1, so I cannot rule out that Fable was no slower at all. Study 1's cost ratio of 2.84 runs from 2.26 to 3.47 and its time ratio of 1.90 from 1.32 to 2.60.</p>
+
+<figure>
+<img src="figures/fig5-totals.svg" alt="Four dot-and-line marks on a log scale showing total cost and total time ratios, Fable over Opus, for Study 2 and Study 1, each with a 95 percent range.">
+<figcaption><b>Figure 5.</b> Fable cost about twice as much in total, and the time gap is small once the conditions are matched. Each mark is the total for Fable divided by the total for Opus, with a 95% range from resampling the jobs (10,000 resamples, fixed seed 20261119). Filled dark dots are Study 2 (8 pairings of 7 jobs, same night); open grey circles are Study 1 (24 jobs, earlier Opus runs). Only eight pairings means a wide range.</figcaption>
+</figure>
+
+<h3>3.3 Open-ended work</h3>
+
+<p><span class="run-in">Planning (P).</span> Fable wrote its plan in about three minutes and Opus in about 25. The times are not like for like, because Opus sent three helpers to search the files first and Fable did not. I used Fable's plan as the base and took three things from Opus's. Fable's plan was better on risk and on how much it asked of people: it capped the number of questions it would put to me and to my assistant, and it treated instructions found inside incoming messages as information rather than orders. Opus noticed that a tool for part of the job already existed, which Fable would have rebuilt. Fable also wrote two times into its plan, such as "checked 12:25", that it could not have known, since it had finished at 12:20.</p>
+
+<p><span class="run-in">Writing in my voice (W).</span> Opus won both blind pairs. The judge gave Opus's two posts 8 and 8 for sounding like me and 8 and 8 for clarity; Fable's scored 7 and 6 for voice and 6 and 6 for clarity. Fable's weaker post closed on a stock moral of the "it's not X, it's Y" kind, stacked up lists, and used words my readers would not know. It also gave the wrong date for when some notes had started waiting. The judge was itself Opus 5.5, so it may have favoured writing like its own [12]. My assistant read the Opus posts afterwards but did not see Fable's, so there is no human comparison.</p>
+
+<p><span class="run-in">Audit (A).</span> Fable audited the business's own systems, and Opus re-ran each of its ten top findings. Nine held as stated, with counts that matched to within one. The tenth found a real failure, a weekly report that had stopped appearing, but gave the wrong cause: Fable read a log line saying the usage allowance had run out and took it at face value, when in fact a news page that mentioned usage limits had tripped a check. The Opus re-check took the same log line at face value at first. Fable said plainly what it had not checked, but it skipped the wider searching the brief had invited. Two of the problems were already being fixed by other work while the audit ran, and the rest were fixed that afternoon.</p>
+
+<p><span class="run-in">Second opinion (S).</span> Opus had drafted a new search title and description for the business's website, and Fable reviewed the draft. Every point it made held when checked against the site's files. The draft reversed a decision I had made three weeks earlier, implied that my customers were all in West London when the site only says that I am, and was long enough to be cut off in search results. I used Fable's wording. The review took about two minutes.</p>
+
+<p><span class="run-in">Research (R).</span> Table 4 sets out the three arms. All three found most of what a thorough answer needed: each covered 11 of the 12 points on a checklist written before the runs, so, as on the bench, the checklist did not separate them. Accuracy on the facts that changed the answer did. Fable alone held all 21 of the claims checked and tied every claim in its report to a source, for about USD 6 and 13 minutes. Opus alone was the cheapest at about USD 4 and 16 minutes, and found one useful thing no other arm found, but its main recommendation relied on a feature that is closed to new users, and it gave one date that its source does not give. Fable leading seven Opus researchers produced the most accurate report. All 24 checked claims held word for word, the lead caught and corrected four mistakes made by its own researchers, and it alone settled the two facts that decided the answer. It cost about 11 times as much as Opus alone, took 35 minutes, and was too long to read quickly. The three arms shared one web-search allowance, and Opus alone and the team's researchers all ran into it part-way, which may have held them back.</p>
+
+<div class="tablewrap">
+<div class="caption"><b>Table 4.</b> The research trial (R). Cost is a range because cache writes are priced at 1.25 or 2 times input depending on how long they are kept. Claims were sampled from each report and checked against the cited page by script or by reading it. One of Fable's 21 held only as a close paraphrase inside quotation marks.</div>
+<table>
+<thead><tr><th></th><th class="n">Fable alone</th><th class="n">Fable leading 7 Opus</th><th class="n">Opus alone</th></tr></thead>
+<tbody>
+<tr><td>Wall time (minutes)</td><td class="n">13.1</td><td class="n">34.9</td><td class="n">16.4</td></tr>
+<tr><td>Cost (USD)</td><td class="n">5.61 to 7.05</td><td class="n">40.91 to 48.76</td><td class="n">3.66 to 4.34</td></tr>
+<tr><td>Output tokens</td><td class="n">64,625</td><td class="n">549,766</td><td class="n">62,005</td></tr>
+<tr><td>Web searches / pages read</td><td class="n">51 / 75</td><td class="n">177 / 648</td><td class="n">32 / 58</td></tr>
+<tr><td>Report length (words)</td><td class="n">6,234</td><td class="n">9,670</td><td class="n">5,219</td></tr>
+<tr><td>Claims checked / held</td><td class="n">21 / 21</td><td class="n">24 / 24</td><td class="n">24 / 22</td></tr>
+<tr><td>Claims tied to a source in the text</td><td class="n">all</td><td class="n">all</td><td class="n">none</td></tr>
+<tr><td>Dead links found by code</td><td class="n">1</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>Marking sheet score (of 22)</td><td class="n">21</td><td class="n">21</td><td class="n">18</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="run-in">Diagnosis (D).</span> Both models were asked why my AI chats kept stopping to hand work back to me, and how to stop it for good. Their reports agreed on the causes and on the first fix. Fable took 4.3 minutes and about 154,000 tokens; Opus took 8.6 minutes and about 191,000. Each found things the other missed. Both repeated the same wrong figure from a usage report that marks itself as not ready.</p>
+
+<h3>3.4 Mistakes</h3>
+
+<p>Table 5 lists every factual mistake found in the open-ended work, by model. None of them would have lowered a bench score.</p>
+
+<div class="tablewrap can-break">
+<div class="caption"><b>Table 5.</b> Factual mistakes found in Study 3. A blank means the mistake was not made by that model in that job, or that the model did not run it.</div>
+<table class="wide">
+<thead><tr><th>Job</th><th>Fable 5.2</th><th>Opus 5.5</th></tr></thead>
+<tbody>
+<tr><td>P</td><td>Wrote two times it could not have known; missed an existing tool</td><td></td></tr>
+<tr><td>W</td><td>Wrong date for when some notes started waiting</td><td></td></tr>
+<tr><td>A</td><td>Right failure, wrong cause, from a misleading log line</td><td>Re-check accepted the same log line at first</td></tr>
+<tr><td>R</td><td>Out of date on what one connector can do; one dead link; under-counted its own searches</td><td>Recommended a feature closed to new users; one date not on its cited page; researchers in the team arm made four errors that the Fable lead corrected</td></tr>
+<tr><td>D</td><td>Repeated a wrong figure from a report</td><td>Repeated the same wrong figure</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>4 Discussion</h2>
+
+<h3>4.1 The bench could not tell them apart</h3>
+
+<p>On jobs with a right answer a computer can check, Fable 5.2 and Opus 5.5 both got the answer right, and so did Sonnet 5.5 at about a fifth of Fable's cost. That is useful for a business, because these are the jobs it runs most often, but it is not evidence that the models are equally able. A score of 1.00 is a ceiling: it says the job was too easy to separate them, not that they would tie on a harder one [4]. The same thing happened with the research trial's checklist. What separated the arms was accuracy on the few facts the decision hung on, which is the kind of measure Okubena and colleagues argue a field has to build for itself [8].</p>
+
+<p><span class="run-in">Against what I expected.</span> [JOE: once you have filled in "What I expected" in Section 1, say here which of your expectations failed and which held. Plain sentences, one per expectation. Facts you can lean on from this paper: the two models scored the same on the bench; Fable cost 2.20 times as much at matched effort against a price ratio of 2; the first timing said two to three times slower and fair timing said 1.20 times; Opus won the blind writing test.]</p>
+
+<h3>4.2 What the extra cost bought</h3>
+
+<p>Where Fable was worth its price, the gain came from checking its work. It tied every research claim to a source; when leading a team it checked its researchers and corrected four of their mistakes; it noticed that a draft quietly reversed an earlier decision; and it planned around the load its plan would put on people. Opus was quicker to find what already existed and was a better writer in my voice, but in the research trial its one material error sat in the recommendation itself. For a small business the cost of acting on that error, days spent building on a feature it cannot get, is far larger than the two or three dollars between the runs.</p>
+
+<p>The sums are small for one person. The whole of Study 1 cost USD 16 on Fable. They grow with volume. A team that runs hundreds of routine jobs a day on the top model pays about twice as much for nothing this study could measure, while one research question that a decision rests on costs a few dollars more on Fable and is worth it.</p>
+
+<h3>4.3 Where it did not</h3>
+
+<p>Fable bought nothing on the routine jobs, and it was worse at writing in my voice. The voice result rests on two pairs marked by a model of the Opus family, so it is weak evidence, but it points the same way as my own reading: Fable's prose leaned on stock phrasing that I would not use.</p>
+
+<h3>4.4 Check the facts, whichever model you use</h3>
+
+<p>Both models made factual mistakes, and the mistakes looked different. Fable's were confident details it could not have known, such as times and a date, and taking a misleading log line at face value. Opus's were a recommendation built on something it had not checked was available, and a date with no source. Both are familiar forms of what the literature calls hallucination [13]. In every case a cheap check caught them: reading the cited page, re-running a count, or asking whether a time could be known. Checking costs little next to the run, and it matters more than the choice between these two models.</p>
+
+<h3>4.5 A rule for a small business</h3>
+
+<p>Table 6 is the rule I now use in my own business. It will change as the models do; the method of testing on one's own work should not.</p>
+
+<div class="tablewrap">
+<div class="caption"><b>Table 6.</b> Which model for which job, from this study.</div>
+<table class="wide">
+<thead><tr><th>Kind of job</th><th>Use</th><th>Evidence here</th></tr></thead>
+<tbody>
+<tr><td>Routine jobs with a right answer a computer can check</td><td>The cheapest model that passes your own tests (here Sonnet 5.5)</td><td>All three level; Fable about 5 times Sonnet's cost</td></tr>
+<tr><td>Writing in a particular person's voice</td><td>Opus 5.5</td><td>Won both blind pairs</td></tr>
+<tr><td>A first plan, or a second opinion before something goes out</td><td>Fable 5.2, then check its facts</td><td>P, S</td></tr>
+<tr><td>Audits and finding why something broke</td><td>Fable 5.2, with findings re-run</td><td>A, D</td></tr>
+<tr><td>Research a decision will rest on</td><td>Fable 5.2 alone; Fable leading a team if the decision is hard to undo</td><td>R</td></tr>
+<tr><td>Any job</td><td>Name the exact model and check the facts the answer rests on</td><td>Section 2.2; Table 5</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.6 Limitations</h3>
+
+<ol class="limits">
+<li><b>One business, one operator, one week.</b> The jobs come from my own work and may not look like yours.</li>
+<li><b>Open-ended work ran once per arm.</b> A single good or bad run could have decided a job, so Study 3 is a set of case studies and not estimates.</li>
+<li><b>One of the models under test did some of the judging.</b> Opus 5.5 marked the blind writing test and re-checked the audit. Models can favour their own writing [12], and the writing result went Opus's way. The accuracy results rest on claims checked against pages and counts re-run against files, but the planning and diagnosis comparisons rest on my own judgement.</li>
+<li><b>Study 1 is not a fair race.</b> Fable was set against Opus runs from other days, on an older version of Claude Code and, for ten of the 24 jobs, a lower effort. Its timings are unreliable (Section 3.2).</li>
+<li><b>Study 2 is fair but small.</b> It covers eight pairings of job and effort, with two runs of each.</li>
+<li><b>Scores of 1.00 are a ceiling.</b> A job both models pass says nothing about a harder one (Section 4.1). I show ranges and no significance tests.</li>
+<li><b>Costs are list-price figures worked out by Claude Code under a subscription, not invoices.</b> Every run went through Claude Code and not the raw API, so its own instructions and tools were part of each run.</li>
+<li><b>The models will change.</b> Fable 5.2 was released on 9 November, the day before this started [1].</li>
+<li><b>I sell AI consulting, including advice on which model to use.</b> I have tried to report the results that cut against Fable as plainly as those that favour it, and the raw numbers are published so that anyone can check.</li>
+</ol>
+
+<h2>5 Conclusion</h2>
+
+<p>On my business's routine work Claude Fable 5.2 and Claude Opus 5.5 were level, and Fable cost about twice as much, which is its price. On open-ended work where a wrong fact would change the decision, Fable was as good or better and, in research, clearly more accurate for about 1.6 times the cost. It was worse at writing in my voice. Both models made mistakes that only checking found. For a small business the practical answer is to keep the expensive model for research, audits, plans and second opinions, to run routine jobs on the cheapest model that passes its own tests, and to check the facts that a decision rests on whichever model wrote them.</p>
+
+<div class="endmatter">
+<h2>Data and code availability</h2>
+<p>Per-run numbers for Studies 1 and 2 (task, model, effort, score, wall time, cost, output tokens) and the scripts that build every table and figure are at {{REPO_LINK}}. Prompts, model replies and the open-ended reports are not released because they contain details of the business and its people; the measured figures for Study 3 are given in full in Tables 2, 4 and 5.</p>
+
+<h2>Use of AI tools</h2>
+<p>The models under test ran every job. Claude Opus 5.5 also helped me write the bench's grading code, marked the blind writing test, re-checked the audit and helped draft this paper. The figures in Tables 3 and B1 and Figures 1 to 5 are generated by the published scripts from the raw run files, and the Study 3 figures are copied from the trial records. I read and checked the final text.</p>
+
+<h2>Declaration of interests</h2>
+<p>I run Native Reason Ltd, which advises small businesses on using AI, including which models to use. No vendor funded this work or saw it before publication. All runs used my own Claude Max subscription.</p>
+</div>
+
+<h2>References</h2>
+<div class="refs">
+<ol>
+<li>Anthropic. Models overview and Pricing, Claude API documentation. <a href="https://platform.claude.com/docs/en/about-claude/models/overview">https://platform.claude.com/docs/en/about-claude/models/overview</a> and <a href="https://platform.claude.com/docs/en/about-claude/pricing">https://platform.claude.com/docs/en/about-claude/pricing</a> (accessed 18 November 2026).</li>
+<li>Liang P, Bommasani R, Lee T, Tsipras D, Soylu D, Yasunaga M, et al. Holistic evaluation of language models. arXiv:2211.09110, 2022.</li>
+<li>Jimenez CE, Yang J, Wettig A, Yao S, Pei K, Press O, et al. SWE-bench: can language models resolve real-world GitHub issues? arXiv:2310.06770, 2023.</li>
+<li>Kiela D, Bartolo M, Nie Y, Kaushik D, Geiger A, Wu Z, et al. Dynabench: rethinking benchmarking in NLP. arXiv:2104.14337, 2021.</li>
+<li>Kapoor S, Stroebl B, Siegel ZS, Nadgir N, Narayanan A. AI agents that matter. arXiv:2407.01502, 2024.</li>
+<li>Chen L, Zaharia M, Zou J. FrugalGPT: how to use large language models while reducing cost and improving performance. arXiv:2305.05176, 2023.</li>
+<li>Ong I, Almahairi A, Wu V, Chiang W-L, Wu T, Gonzalez JE, et al. RouteLLM: learning to route LLMs with preference data. arXiv:2406.18665, 2024.</li>
+<li>Okubena A, Mohammed YA, Elbadawi M. FormuLLA: a large language model approach to generating novel 3D printable formulations. arXiv:2601.02071, 2026.</li>
+<li>OpenAI. Mathematical manuscripts and supporting proof artifacts. <a href="https://github.com/openai/math">https://github.com/openai/math</a>, October 2026.</li>
+<li>Anthropic. Claude Code documentation. <a href="https://code.claude.com/docs">https://code.claude.com/docs</a> (accessed 18 November 2026).</li>
+<li>Zheng L, Chiang W-L, Sheng Y, Zhuang S, Wu Z, Zhuang Y, et al. Judging LLM-as-a-judge with MT-Bench and Chatbot Arena. arXiv:2306.05685, 2023.</li>
+<li>Panickssery A, Bowman SR, Feng S. LLM evaluators recognize and favor their own generations. arXiv:2404.13076, 2024.</li>
+<li>Ji Z, Lee N, Frieske R, Yu T, Su D, Xu Y, et al. Survey of hallucination in natural language generation. arXiv:2202.03629, 2022.</li>
+</ol>
+</div>
+
+<div class="page-break"></div>
+<h2>Appendix A. The bench jobs</h2>
+
+<div class="tablewrap can-break">
+<div class="caption"><b>Table A1.</b> The 25 bench jobs. All use made-up data. Agent jobs use tools inside a fenced folder; the rest are a single prompt and reply.</div>
+<table class="wide">
+<thead><tr><th>Job</th><th>What it stands for in the business</th><th>Marked by</th></tr></thead>
+<tbody>
+<tr><td>router-label</td><td>Labelling a request by difficulty and data sensitivity before choosing a model</td><td>Answer key; reported in Section 3.1, outside the Fable and Opus comparison</td></tr>
+<tr><td>inbox-route</td><td>Filing incoming notes to the right folder</td><td>Answer key</td></tr>
+<tr><td>boundary</td><td>Deciding whether material belongs to a client or to the business</td><td>Answer key; letting client material through counts as unsafe</td></tr>
+<tr><td>commitments</td><td>Pulling promises out of an email thread: who, which way, by when</td><td>Answer key; invented extras penalised</td></tr>
+<tr><td>voice-rewrite</td><td>Rewriting text in the owner's style rules</td><td>Rule checks</td></tr>
+<tr><td>code-timelog</td><td>A small parser written from a specification</td><td>15 hidden tests</td></tr>
+<tr><td>code-rules</td><td>The email routing-rules engine</td><td>16 hidden tests</td></tr>
+<tr><td>code-egress</td><td>Fixing the check that decides whether a file may leave the laptop</td><td>15 hidden tests</td></tr>
+<tr><td>bugfix</td><td>Fixing failing tests in a small code base (agent)</td><td>The repository's tests; editing the tests scores zero</td></tr>
+<tr><td>localhost</td><td>Getting a small web app running locally and safely (agent)</td><td>Starts it, checks two pages and that it listens only locally and was shut down</td></tr>
+<tr><td>feature-recur</td><td>Building a recurring-tasks feature end to end (agent)</td><td>14 hidden tests</td></tr>
+<tr><td>brain-ask, brain-wording-2 to 5</td><td>Answering eight questions about a made-up business's notes, each worded five ways in separate calls</td><td>Shared answer key; answers that change with the wording are counted</td></tr>
+<tr><td>design-call</td><td>Writing up a design call into decisions and actions</td><td>Answer key</td></tr>
+<tr><td>digest-day</td><td>A day's email digest from a made-up inbox (agent)</td><td>Script checks the files left behind</td></tr>
+<tr><td>briefing-day</td><td>A morning briefing from a made-up week of notes (agent)</td><td>Script checks the briefing</td></tr>
+<tr><td>long-build</td><td>A longer multi-file build from a written plan (agent)</td><td>Hidden tests</td></tr>
+<tr><td>dream-generate, dream-apply, dream-apply-full</td><td>The nightly job that proposes and applies tidy-ups to the notes (agent)</td><td>Script checks what changed and what must not</td></tr>
+<tr><td>brain-trick</td><td>Fifteen emails, twelve of them trying to talk the agent out of its owner's rules (agent)</td><td>What actually reached the outbox; any secret sent to the wrong person is unsafe</td></tr>
+<tr><td>brain-trick-norules</td><td>The same inbox with the owner's written rules removed (agent)</td><td>As above, judged on outcomes alone</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Appendix B. Study 1, job by job</h2>
+
+<div class="tablewrap">
+<div class="caption"><b>Table B1.</b> Study 1: Fable 5.2 at high effort on 10 November against the Opus 5.5 and Sonnet 5.5 runs the bench already held. Means over runs. Effort is the effort of each baseline run, Opus then Sonnet. Cost in USD, time in seconds.</div>
+{{TABLE_STUDY1}}
+<p class="note">Totals: Fable USD 16.37 and 3,592 s; Opus USD 5.77 and 1,891 s; Sonnet USD 3.06 and 1,380 s. Mean of job scores: Fable 0.999, Opus 0.976, Sonnet 0.993.</p>
+</div>
+
+<h2>Appendix C. Exact versions</h2>
+
+<div class="tablewrap">
+<div class="caption"><b>Table C1.</b> What was used.</div>
+<table class="wide">
+<thead><tr><th>Item</th><th>Version</th><th>Used for</th></tr></thead>
+<tbody>
+<tr><td>Claude Code</td><td>2.1.284</td><td>Study 1 baselines made on 5 and 6 October</td></tr>
+<tr><td>Claude Code</td><td>2.1.291</td><td>Study 1 baselines made on 15 and 21 October</td></tr>
+<tr><td>Claude Code</td><td>2.1.322</td><td>Fable in Study 1 and Opus on the four wording jobs (10 November); Study 2 (11 November); the open-ended work (10 to 16 November)</td></tr>
+<tr><td>Claude Code</td><td>2.1.328</td><td>The labelling job run again on 19 November</td></tr>
+<tr><td>Model identifiers</td><td><code>claude-fable-5-2</code>, <code>claude-opus-5-5</code>, <code>claude-sonnet-5-5</code>, <code>claude-haiku-5-5</code></td><td>Named in full and checked in each run's transcript</td></tr>
+<tr><td>Prices</td><td>As in Table 1, read on 18 November 2026</td><td>Cost figures</td></tr>
+<tr><td>Operating system</td><td>Windows 11, version 10.0.26200</td><td>The one laptop all runs used</td></tr>
+<tr><td>Python</td><td>3.12.10</td><td>The published scripts</td></tr>
+<tr><td>matplotlib</td><td>3.11.2</td><td>Figures 1 to 5</td></tr>
+<tr><td>Chrome</td><td>157.0.8103.79</td><td>Printing this PDF from <code>paper.html</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Appendix D. Two real outputs</h2>
+
+<p>Both come from jobs that run on made-up data and are marked by code. They are copied from the raw result files as the models wrote them, with a made-up company and contact name replaced by [client] and [contact]. I picked one that went right and one that lost points. The mistakes that matter for a decision are in Table 5, but those come from open-ended work whose replies I do not release.</p>
+
+<p><span class="run-in">D1. A right answer.</span> Job "commitments" (Section 2.7), Fable 5.2 at high effort, 11 November. Score 1.00.</p>
+<pre class="out">[
+ {"direction": "owed_to_us", "who": "Marta Kowalski", "what": "Send the supplier spreadsheet", "due": "by end of this week"},
+ {"direction": "owed_to_us", "who": "Tom", "what": "Sort shared drive access", "due": "sometime next week"},
+ {"direction": "owed_to_us", "who": "Marta Kowalski", "what": "Chase legal for the signed NDA", "due": null},
+ {"direction": "we_owe", "who": "Joe", "what": "Send the revised quote", "due": "by Monday 12 October"},
+ {"direction": "we_owe", "who": "Joe", "what": "Book the follow-up workshop", "due": "once Tom confirms access"},
+ {"direction": "we_owe", "who": "Joe", "what": "Send the anonymised examples", "due": "probably mid-October"},
+ {"direction": "owed_to_us", "who": "Priya", "what": "Send the staff rota for the pilot store", "due": "before the workshop"}
+]</pre>
+
+<p><span class="run-in">D2. An answer that lost points.</span> Job "brain-wording-4": a voice assistant answers eight quick questions from the notes of a made-up consultant, and is asked for "at most two short sentences" each. Opus 5.5 at high effort, 10 November. The marking code also caps each spoken answer at 45 words. Question 2 was "Where do I need to be next, and how do I get ready for it?". The answer below was correct but ran to 47 words, so the code halved that question's score. The other seven answers scored 1.00, so the job scored 0.9375. The marking found no invented facts, no stale facts and no hedging in any of the eight.</p>
+<pre class="out">"Next is the [client] discovery call with [contact] at 12:30 on Zoom. To get ready, skim the no-show survey summary and bring its three questions: who sends the reminder texts and when, whether patients can rebook online, and whether there's a missed-appointment fee that's enforced."</pre>
+
+</body>
+</html>

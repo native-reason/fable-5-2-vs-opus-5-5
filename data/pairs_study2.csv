@@ -1,0 +1,9 @@
+study,task,fable_effort,opus_effort,fable_n,opus_n,fable_score,opus_score,fable_wall_s,opus_wall_s,fable_cost_usd,opus_cost_usd,cost_ratio,time_ratio,fable_output_tokens,opus_output_tokens
+study2,boundary,high,high,2,2,1.0,1.0,5.0,4.7,0.041,0.0213,1.925,1.064,289,316
+study2,bugfix,medium,medium,2,2,1.0,1.0,13.2,25.6,0.1098,0.1218,0.901,0.516,1046,2321
+study2,design-call,high,high,2,2,1.0,1.0,35.5,23.5,0.2886,0.1236,2.335,1.511,3776,2660
+study2,design-call,medium,medium,2,2,1.0,1.0,22.6,22.2,0.2534,0.1323,1.915,1.018,2552,2493
+study2,digest-day,high,high,2,2,1.0,1.0,68.2,61.1,0.7163,0.3372,2.124,1.116,8832,7898
+study2,feature-recur,medium,medium,2,2,1.0,1.0,95.8,78.2,0.7876,0.339,2.323,1.225,12340,10309
+study2,long-build,medium,medium,2,2,1.0,1.0,283.0,218.8,2.3265,0.965,2.411,1.293,36194,26434
+study2,voice-rewrite,high,high,2,2,1.0,1.0,5.2,6.8,0.022,0.0302,0.728,0.765,358,470

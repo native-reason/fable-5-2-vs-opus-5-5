@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "When is the more expensive model worth paying for? Claude Fable 5.2 and Claude Opus 5.5 on a small business's own work"
+type: report
+authors:
+  - family-names: Riggs
+    given-names: Joseph
+    affiliation: Native Reason Ltd
+date-released: 2026-11-18
+version: "1"
+license: CC-BY-4.0
