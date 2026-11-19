@@ -1,8 +1,9 @@
 """Build paper/paper.html from paper/paper.src.html and the data tables, then print it to paper/paper.pdf.
 
-Usage: python scripts/build.py [--status "Draft 1, 18 November 2026"] [--repo-link URL] [--no-pdf]
+Usage: python scripts/build.py [--status "Draft 2, 19 November 2026"] [--repo-link URL] [--no-pdf]
 
-The two data tables (Table 3 and Table B1) are filled from data/*.csv so no number is copied by hand.
+The data tables (the matched bench pass, the re-tests, and the earlier comparisons in Appendix B) are
+filled from data/*.csv so no number is copied by hand.
 The PDF is printed by a headless browser with its own throwaway profile, so it never opens a window
 or touches the browser the owner is using.
 """
@@ -46,9 +47,9 @@ def cell(text, numeric=True):
     return f'<td class="n">{text}</td>' if numeric else f"<td>{html.escape(text)}</td>"
 
 
-def spread(index, task, model, effort, kind, places):
+def spread(index, task, model, effort, kind, places, study="study2"):
     """'mean<br>(min to max)' for one job, model and effort, from by_task.csv's repeat ranges."""
-    line = index[("study2", task, model, effort)]
+    line = index[(study, task, model, effort)]
     low, high = line[f"min_{kind}"], line[f"max_{kind}"]
     mean_value = line["mean_wall_s" if kind == "wall_s" else "mean_cost_usd"]
     return (f'{num(mean_value, places)}<br><span class="rng">{num(low, places)} to {num(high, places)}</span>')
@@ -81,6 +82,140 @@ def table_study2():
                 + cell(num(fable_wall, 0)) + cell(num(opus_wall, 0)) + cell(num(fable_wall / opus_wall, 2))
                 + cell(num(fable_cost, 2)) + cell(num(opus_cost, 2)) + cell(num(fable_cost / opus_cost, 2)) + "</tr>")
     return f'<table class="b3">{head}<tbody>{"".join(body)}</tbody></table>'
+
+
+def score_text(index, task, model):
+    """Mean score, with the worst single run after it when the runs differed."""
+    line = index[("matched", task, model, "high")]
+    text = num(line["mean_score"], 2)
+    if float(line["worst_score"]) < float(line["best_score"]):
+        text += f'<br><span class="rng">worst {num(line["worst_score"], 2)}</span>'
+    return text
+
+
+def time_text(index, task, model):
+    line = index[("matched", task, model, "high")]
+    if not line["mean_wall_s"]:
+        return "-"
+    text = num(line["mean_wall_s"], 0)
+    if line["n_timed"] != line["n"]:
+        text += f'<br><span class="rng">{line["n_timed"]} of {line["n"]} timed</span>'
+    return text
+
+
+def table_matched():
+    """The main bench table: every job in the matched pass, means over three runs, totals with 95% ranges."""
+    rows = read("pairs_matched.csv")
+    index = {(r["study"], r["task"], r["model"], r["effort"]): r for r in read("by_task.csv")}
+    totals = {r["measure"]: r for r in read("totals.csv") if r["study"] == "matched"}
+    head = ("<thead><tr><th>Job</th><th class=\"n\">Score Fable</th><th class=\"n\">Score Opus</th>"
+            "<th class=\"n\">Time Fable</th><th class=\"n\">Time Opus</th><th class=\"n\">Ratio</th>"
+            "<th class=\"n\">Cost Fable</th><th class=\"n\">Cost Opus</th><th class=\"n\">Ratio</th></tr></thead>")
+    body = []
+    for row in sorted(rows, key=lambda r: r["task"]):
+        task = row["task"]
+        body.append("<tr>" + cell(task, False)
+                    + cell(score_text(index, task, "Fable 5.2")) + cell(score_text(index, task, "Opus 5.5"))
+                    + cell(time_text(index, task, "Fable 5.2")) + cell(time_text(index, task, "Opus 5.5"))
+                    + cell(num(row["time_ratio"], 2) if row["time_ratio"] else "-")
+                    + cell(num(row["fable_cost_usd"], 3)) + cell(num(row["opus_cost_usd"], 3))
+                    + cell(num(row["cost_ratio"], 2)) + "</tr>")
+    cost, time = totals["cost"], totals["time"]
+    fable_score = sum(float(r["fable_score"]) for r in rows) / len(rows)
+    opus_score = sum(float(r["opus_score"]) for r in rows) / len(rows)
+    body.append('<tr class="total">' + cell("Total (mean for score)", False)
+                + cell(num(fable_score, 3)) + cell(num(opus_score, 3))
+                + cell(num(time["fable_total"], 0)) + cell(num(time["opus_total"], 0))
+                + cell(f'{num(time["ratio"], 2)}<br><span class="rng">{num(time["low_95"], 2)} to {num(time["high_95"], 2)}</span>')
+                + cell(num(cost["fable_total"], 2)) + cell(num(cost["opus_total"], 2))
+                + cell(f'{num(cost["ratio"], 2)}<br><span class="rng">{num(cost["low_95"], 2)} to {num(cost["high_95"], 2)}</span>')
+                + "</tr>")
+    return f'<table class="b3">{head}<tbody>{"".join(body)}</tbody></table>'
+
+
+def minutes(row):
+    text = num(float(row["wall_s"]) / 60, 1)
+    return text + "*" if row["timing_excluded"] else text
+
+
+def table_research():
+    """Every research re-test run: verdicts on the sampled claims, cost and time."""
+    rows = [r for r in read("retests.csv") if r["trial"] == "R"]
+    head = ("<thead><tr><th>Run</th><th>Model</th><th class=\"n\">Checked</th><th class=\"n\">Right</th>"
+            "<th class=\"n\">Wrong</th><th class=\"n\">Unsup.</th><th class=\"n\">Out of date</th>"
+            "<th class=\"n\">Dead link</th><th class=\"n\">Problem rate</th><th class=\"n\">Cost</th>"
+            "<th class=\"n\">Minutes</th><th class=\"n\">Searches / pages</th><th class=\"n\">Words</th></tr></thead>")
+    body = []
+    for row in sorted(rows, key=lambda r: (r["brief"], r["model"], r["run"])):
+        body.append("<tr>" + cell(row["run"], False) + cell(row["model"], False) + cell(row["checked"])
+                    + cell(row["right"]) + cell(row["wrong"]) + cell(row["unsupported"]) + cell(row["out_of_date"])
+                    + cell(row["dead_link"]) + cell(f'{float(row["problem_rate"]) * 100:.0f}%')
+                    + cell(num(row["cost_usd"], 2)) + cell(minutes(row))
+                    + cell(f'{row["web_searches"]} / {row["page_reads"]}') + cell(num(row["report_words"], 0)) + "</tr>")
+    return f'<table class="b3">{head}<tbody>{"".join(body)}</tbody></table>'
+
+
+def table_audit_second_opinion():
+    """Every audit and second-opinion re-test run: how the checked points held, cost and time."""
+    rows = [r for r in read("retests.csv") if r["trial"] in ("A", "S")]
+    head = ("<thead><tr><th>Run</th><th>Model</th><th class=\"n\">Checked</th><th class=\"n\">Held</th>"
+            "<th class=\"n\">Partly / wrong cause</th><th class=\"n\">Did not hold</th><th class=\"n\">Could not check</th>"
+            "<th class=\"n\">Known issues caught (of 5)</th><th class=\"n\">Cost</th><th class=\"n\">Minutes</th>"
+            "<th class=\"n\">Files read</th></tr></thead>")
+    body = []
+    for row in sorted(rows, key=lambda r: (r["trial"], r["model"], r["run"])):
+        audit = row["trial"] == "A"
+        body.append("<tr>" + cell(row["run"], False) + cell(row["model"], False) + cell(row["checked"])
+                    + cell(row["real"] if audit else row["true"])
+                    + cell(row["real_wrong_cause"] if audit else row["partly_true"])
+                    + cell(row["not_real"] if audit else row["false"])
+                    + cell(row["could_not_check"] if audit else row["not_checkable"])
+                    + cell("-" if audit else row["checklist_caught"])
+                    + cell(num(row["cost_usd"], 2)) + cell(minutes(row)) + cell(row["file_reads"]) + "</tr>")
+    return f'<table class="b3">{head}<tbody>{"".join(body)}</tbody></table>'
+
+
+# What the first week's single runs got wrong, from the trial records (their replies are not published).
+FIRST_WEEK_FABLE = ("Two times in a plan it could not have known; a wrong date in a post; a real failure given the "
+                    "wrong cause; out of date on one connector; one dead link; a wrong figure repeated from an "
+                    "unfinished report")
+FIRST_WEEK_OPUS = ("A recommendation built on a feature closed to new users; one date not on its cited page; "
+                   "the same wrong figure repeated from an unfinished report")
+
+
+def table_mistakes():
+    """Mistake counts per model, summed over every re-test run, plus the first week's list."""
+    rows = read("retests.csv")
+
+    def total(model, trial, *fields):
+        return sum(int(r[f] or 0) for r in rows if r["model"] == model and r["trial"] == trial for f in fields)
+
+    def missed(model):
+        runs = [r for r in rows if r["model"] == model and r["trial"] == "S"]
+        return f"{sum(5 - int(r['checklist_caught']) for r in runs)} of {5 * len(runs)}"
+
+    lines = [("Research claims checked", "R", ("checked",)),
+             ("Contradicted by a source, or out of date", "R", ("wrong", "out_of_date")),
+             ("Cited page does not say it", "R", ("unsupported",)),
+             ("Dead link", "R", ("dead_link",)),
+             ("Audit findings checked", "A", ("checked",)),
+             ("Not real", "A", ("not_real",)),
+             ("Real, but the wrong cause", "A", ("real_wrong_cause",)),
+             ("Second-opinion claims checked", "S", ("checked",)),
+             ("False", "S", ("false",)),
+             ("Partly true", "S", ("partly_true",))]
+    head = "<thead><tr><th>Mistake</th><th>Fable 5.2</th><th>Opus 5.5</th></tr></thead>"
+    body = []
+    for label, trial, fields in lines:
+        is_count_of_checked = fields == ("checked",)
+        name = f"<b>{html.escape(label)}</b>" if is_count_of_checked else html.escape(label)
+        body.append(f"<tr><td>{name}</td>" + cell(str(total("Fable 5.2", trial, *fields)))
+                    + cell(str(total("Opus 5.5", trial, *fields))) + "</tr>")
+    body.append("<tr><td>Known problems with the draft missed</td>" + cell(missed("Fable 5.2"))
+                + cell(missed("Opus 5.5")) + "</tr>")
+    body.append("<tr><td>First week, single runs</td>" + cell(FIRST_WEEK_FABLE, False)
+                + cell(FIRST_WEEK_OPUS, False) + "</tr>")
+    return f'<table class="wide">{head}<tbody>{"".join(body)}</tbody></table>'
 
 
 def table_study1():
@@ -149,7 +284,9 @@ def main():
     text = SRC.read_text(encoding="utf-8")
     link = args.repo_link
     repo = f'<a href="{html.escape(link)}">{html.escape(link)}</a>' if link.startswith("http") else html.escape(link)
-    fills = {"{{TABLE_STUDY2}}": table_study2(), "{{TABLE_STUDY1}}": table_study1(),
+    fills = {"{{TABLE_MATCHED}}": table_matched(), "{{TABLE_RESEARCH}}": table_research(),
+             "{{TABLE_AUDIT_SO}}": table_audit_second_opinion(), "{{TABLE_MISTAKES}}": table_mistakes(),
+             "{{TABLE_STUDY2}}": table_study2(), "{{TABLE_STUDY1}}": table_study1(),
              "{{STATUS_LINE}}": html.escape(args.status), "{{REPO_LINK}}": repo}
     for marker, value in fills.items():
         if marker not in text:
