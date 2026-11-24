@@ -3,11 +3,22 @@
 **Claude Fable 5.2 and Claude Opus 5.5 on a small business's own work.**
 Joseph Riggs, Native Reason Ltd, London. November 2026.
 
-[Read the paper (PDF)](paper/paper.pdf)
+Claude Fable 5.2 is Anthropic's top AI model, and it is twice the price of the next one down, Claude Opus 5.5. I ran both on my own business's everyday jobs to see when the dearer one is worth it.
 
-Fable 5.2 costs twice as much per token as Opus 5.5. I ran both on the work of my one-person AI consultancy and checked what came back: all 25 bench jobs marked by code, three runs each with both models at the same settings (150 runs), and three open-ended jobs (research, an audit, a second opinion on a draft) repeated two or three times per model and checked blind by a third model. No client documents or client personal data were used: the bench jobs run on made-up data, and the open-ended work on the business's own notes and public web pages.
+## The short answer
 
-In short: on jobs with a right answer a computer can check, the two were level and Fable cost 2.7 times as much. On research and the audit they were level too, with Fable costing 2.3 and 1.15 times as much. Fable was better at one job, a second opinion on a draft: it caught every known problem in all three runs, and Opus missed one or two. Both models cited pages that did not back their claims, about one research claim in four, so check the facts a decision rests on whichever model you use.
+1. **Routine jobs with a right answer** (sorting email, pulling dates out of a thread, small code fixes): the top model did no better, and it cost 2.7 times as much. Use the cheapest model that passes your own test.
+2. **Research and audits:** in blind checks Opus 5.5 was as accurate as Fable 5.2, for less than half the cost on research.
+3. **A second opinion before something goes out:** Fable 5.2 caught every known problem in a draft, three runs out of three. Opus missed one or two each time. This was the one job where the top model earned its price.
+4. **Whichever model you use, check the facts a decision rests on.** About one research claim in four, from either model, cited a page that did not back it.
+
+No client documents or client personal data were used: the tests run on made-up data, my own business notes and public web pages.
+
+[Read the paper (PDF)](paper/paper.pdf). Page 1 has the short answer. Everything below is for anyone who wants to check the numbers.
+
+## How it was tested, in one paragraph
+
+All 25 bench jobs were marked by code, and each ran three times on both models at the same settings (150 runs). Three open-ended jobs (research, an audit, and a second opinion on a draft) ran two or three times per model and were checked blind by a third model. On research Fable cost 2.3 times as much as Opus, and on the audit 1.15 times.
 
 ## What is in this repository
 
@@ -84,4 +95,4 @@ Corrections will be made as new versions, with earlier versions kept in the hist
 
 The paper, figures and data are released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The scripts are released under the MIT licence. See `LICENSE`.
 
-Contact: hello@nativereason.com
+Contact: hello@nativereason.com, https://nativereason.com
