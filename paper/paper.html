@@ -76,7 +76,7 @@
 </head>
 <body>
 
-<div class="status"><span>Version 2, 19 November 2026</span><span>Native Reason research note 1</span></div>
+<div class="status"><span>Version 2.1, 25 November 2026</span><span>Native Reason research note 1</span></div>
 
 <h1 class="title">When is the more expensive model worth paying for? Claude Fable 5.2 and Claude Opus 5.5 on a small business's own work</h1>
 <div class="authors">Joseph Riggs</div>
@@ -214,7 +214,7 @@
 
 <h3>3.2 The bench: cost and time</h3>
 
-<p>Fable cost more on every job (Table 3, Figures 1 and 2). In total it cost 2.65 times as much as Opus (USD 16.54 against 6.24 for three runs of every job; 95% range 2.29 to 3.12). The ratio per job ran from 1.81 on commitments to 5.43 on code-egress, and was above the price ratio of 2 on 20 of the 25 jobs. The reason is tokens. At the same effort Fable wrote 1.6 times as many output tokens as Opus, much of it thinking, and output is the dearest part of a call. It wrote 1.2 times as much to the prompt cache and read 1.2 times as much from it. (These token counts come from the 143 runs that recorded them.) The biggest gaps were on the three code jobs, where Fable cost 5.0 times as much.</p>
+<p>Fable cost more on every job (Table 3, Figures 1 and 2). In total it cost 2.65 times as much as Opus (USD 16.54 against 6.24 for an average run of every job, or 49.63 against 18.71 for all three runs of every job; 95% range 2.29 to 3.12). The ratio per job ran from 1.81 on commitments to 5.43 on code-egress, and was above the price ratio of 2 on 20 of the 25 jobs. The reason is tokens. At the same effort Fable wrote 1.6 times as many output tokens as Opus, much of it thinking, and output is the dearest part of a call. It wrote 1.2 times as much to the prompt cache and read 1.2 times as much from it. (These token counts come from the 143 runs that recorded them.) The biggest gaps were on the three code jobs, where Fable cost 5.0 times as much.</p>
 
 <p>Fable was also slower, though by less than my first notes said. In total it took 1.80 times as long (95% range 1.33 to 2.34), from the 137 runs the watchdog did not pause. It was quicker than Opus on 7 of the 25 jobs. Two Fable runs on the web-app job sat waiting for over ten minutes each; without that job the ratio is 1.55. Wall time on a busy laptop is a rougher measure than cost, so I give it less weight.</p>
 

@@ -74,6 +74,7 @@ Corrections will be made as new versions, with earlier versions kept in the hist
 |---|---|---|
 | 1 | 18 November 2026 | First draft, not released. Two reviews, one by each model under test, said its open-ended results rested on single runs |
 | 2 | 19 November 2026 | The full matched bench pass and blind re-tests of the research, audit and second-opinion jobs. The first draft's research advantage for Fable did not repeat |
+| 2.1 | 25 November 2026 | Correction to Section 3.2: it gave USD 16.54 against 6.24 as the cost of three runs of every job. Those figures are the cost of an average run of every job; all three runs of every job cost USD 49.63 against 18.71. The ratio of 2.65 and every result are unchanged. |
 
 ## Citation
 
@@ -87,7 +88,7 @@ Corrections will be made as new versions, with earlier versions kept in the hist
   year        = {2026},
   month       = nov,
   address     = {London, United Kingdom},
-  note        = {Version 2, 19 November 2026}
+  note        = {Version 2.1, 25 November 2026}
 }
 ```
 
